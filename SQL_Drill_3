@@ -1,0 +1,53 @@
+SELECT
+    trips.trip_id, trips.duration, weather.Events
+FROM 
+	weather
+INNER JOIN 
+	trips
+ON 
+	weather.zip = trips.zip_code
+WHERE 
+	weather.events LIKE 'Rain'
+ORDER BY
+	duration DESC
+LIMIT 3
+--
+SELECT 
+  station_id, 
+  count(*)
+FROM 
+  status
+WHERE 
+  bikes_available = 0
+GROUP BY 
+  station_id
+ORDER BY 2 DESC 
+LIMIT 1
+--
+SELECT 
+	stations.name,
+	count(*), 
+	stations.dockcount
+FROM 
+	trips
+INNER JOIN 
+	stations
+ON 
+	stations.name = trips.start_station
+GROUP BY 
+	trips.start_station
+ORDER BY 
+	stations.dockcount
+--
+WITH average_dur
+AS(SELECT substr(start_date, 1,10) as date, 
+	AVG(duration) as avg_dur
+	FROM trips
+	GROUP BY 1)
+
+SELECT weather.date, average_dur.avg_dur
+FROM average_dur
+JOIN weather
+ON weather.date = average_dur.date
+WHERE weather.Events like 'Rain'
+	
