@@ -1,5 +1,7 @@
 SELECT
-    trips.trip_id, trips.duration, weather.Events
+    trips.trip_id, 
+    trips.duration, 
+    weather.Events
 FROM 
 	weather
 INNER JOIN 
@@ -45,9 +47,15 @@ AS(SELECT substr(start_date, 1,10) as date,
 	FROM trips
 	GROUP BY 1)
 
-SELECT weather.date, average_dur.avg_dur
-FROM average_dur
-JOIN weather
-ON weather.date = average_dur.date
-WHERE weather.Events like 'Rain'
+SELECT 
+	weather.date, 
+	average_dur.avg_dur
+FROM 
+	average_dur
+JOIN 
+	weather
+ON 
+	weather.date = average_dur.date
+WHERE 
+	weather.Events like 'Rain'
 	
