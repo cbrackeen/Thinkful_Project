@@ -1,0 +1,47 @@
+Most expensive?
+SELECT 
+  max(CAST(substr(price, 2) AS INT))
+FROM 
+  listings
+
+What else?
+SELECT 
+  max(CAST(substr(price, 2) AS INT)), 
+  *
+FROM 
+  listings
+
+Most popular neighborhoods? (no neighborhoods listed for this city)
+SELECT 
+  zipcode, 
+  count(*)
+FROM 
+  listings
+GROUP BY 
+  zipcode
+ORDER BY 2 DESC
+LIMIT 1
+
+What time of year is the cheapest to go? (May)
+SELECT 
+  substr(date, 6,2), 
+  AVG(CAST(substr(price, 2) AS INT)), 
+  COUNT(*)
+FROM 
+  calendar
+GROUP BY 1
+ORDER BY 2
+LIMIT 1
+
+Busiest time of year? (May)
+SELECT 
+  substr(date, 6,2), 
+  available, 
+  count(*)
+FROM 
+  calendar
+WHERE 
+  available like 'f'
+GROUP BY 1
+ORDER By 3 DESC 
+LIMIT 1
